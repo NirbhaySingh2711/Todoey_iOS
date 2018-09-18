@@ -9,7 +9,8 @@
 import UIKit
 
 class TodoListVC: UITableViewController {
-    let item = ["Study Add. Math","Study Int. Math","Study Physics","Study Computer Science"]
+    var item = ["Study Add. Math","Study Int. Math","Study Physics","Study Computer Science"]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
        
@@ -32,5 +33,32 @@ class TodoListVC: UITableViewController {
        
         tableView.deselectRow(at: indexPath, animated: true)
     }
+    @IBAction func AddButtonPressed(_ sender: UIBarButtonItem) {
+        var textfield = UITextField()
+        let alert = UIAlertController(title: "Add new item", message:"", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Add item", style: .default) { (action) in
+            print("Success")
+            print(textfield.text!)
+            if (textfield.text!==""){
+                let alert = UIAlertController(title: "Error", message: "Please input some values", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Okay", style: .destructive, handler: nil))
+                self.present(alert,animated: true)
+            }else{
+                print(self.item)
+                self.item.append(textfield.text!)
+                print(self.item)
+                self.tableView.reloadData()
+            }
+         
+        }
+        alert.addTextField { (alertTextField) in
+            alertTextField.placeholder="Enter a new item..."
+            textfield = alertTextField
+            print(alertTextField.text!)
+        }
+        alert.addAction(action)
+        present(alert,animated: true,completion: nil)
+    }
+  
 }
 
