@@ -10,9 +10,12 @@ import UIKit
 
 class TodoListVC: UITableViewController {
     var item = ["Study Add. Math","Study Int. Math","Study Physics","Study Computer Science"]
-    
+    let defaults = UserDefaults.standard
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let items = defaults.array(forKey: "TodoListArray") as? [String]{
+            item = items
+        }
        
     }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -47,6 +50,7 @@ class TodoListVC: UITableViewController {
                 print(self.item)
                 self.item.append(textfield.text!)
                 print(self.item)
+                self.defaults.setValue(self.item, forKey: "TodoListArray")
                 self.tableView.reloadData()
             }
          
@@ -59,6 +63,5 @@ class TodoListVC: UITableViewController {
         alert.addAction(action)
         present(alert,animated: true,completion: nil)
     }
-  
 }
 
